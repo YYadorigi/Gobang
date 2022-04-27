@@ -30,3 +30,5 @@
 *.exe
 *.out
 *.app
+/.vs/Gobang/v17/Browse.VC.db
+/.vs/Gobang/v17/Browse.VC.opendb
