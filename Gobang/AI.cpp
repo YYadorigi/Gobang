@@ -52,38 +52,22 @@ bool chongsi()
 					//判断该四连的左右是否有白子或者左右已经到达边界
 					if (j + 4 == N && gobangboard.ShowCell(i, j -1) == 0)
 					{
-						gobangboard.SetCell(i, j - 1,2);
-						setfillcolor(WHITE);
-						solidcircle(i*35, (j-1)*35, 14);
-						setchessorder.emplace_back(i,j-1,2);
-						rounds++;
+						operate.dropChessWhite(i, j - 1);
 						return true;//赌成功了
 					}
 					else if (j == 0 && gobangboard.ShowCell(i, j +4) == 0)
 					{
-						gobangboard.SetCell(i, j + 4,2);
-						setfillcolor(WHITE);
-						solidcircle(i * 35, (j +4) * 35, 14);
-						setchessorder.emplace_back(i, j +4, 2);
-						rounds++;
+						operate.dropChessWhite(i, j +4);
 						return true;//赌成功了
 					}
 					else if (j < N-4 && gobangboard.ShowCell(i, j -1) == 2 && gobangboard.ShowCell(i, j + 4) == 0)
 					{
-						gobangboard.SetCell(i, j + 4, 2);
-						setfillcolor(WHITE);
-						solidcircle(i * 35, (j + 4) * 35, 14);
-						setchessorder.emplace_back(i, j +4, 2);
-						rounds++;
+						operate.dropChessWhite(i, j +4);
 						return true;//赌成功了
 					}
 					else if (j > 0 && gobangboard.ShowCell(i, j + 4) == 2 && gobangboard.ShowCell(i, j -1) == 0)
 					{
-						gobangboard.SetCell(i, j - 1, 2);
-						setfillcolor(WHITE);
-						solidcircle(i * 35, (j -1) * 35, 14);
-						setchessorder.emplace_back(i, j - 1, 2);
-						rounds++;
+						operate.dropChessWhite(i, j - 1);
 						return true;//赌成功了
 					}
 				}
@@ -103,38 +87,22 @@ bool chongsi()
 				{
 					if (j == 0 && gobangboard.ShowCell(j+4, i) == 0)
 					{
-						gobangboard.SetCell(j+4, i,2);
-						setfillcolor(WHITE);
-						solidcircle((j+4)*35, i*35, 14);
-						setchessorder.emplace_back(j+4,i, 2);
-						rounds++;
+						operate.dropChessWhite(j+4,i);
 						return true;//赌成功了
 					}
 					else if (j + 4 == N && gobangboard.ShowCell(j - 1, i) == 0)
 					{
-						gobangboard.SetCell(j - 1, i,2);
-						setfillcolor(WHITE);
-						solidcircle((j - 1) * 35, i * 35, 14);
-						setchessorder.emplace_back(j -1, i, 2);
-						rounds++;
+						operate.dropChessWhite(j - 1, i);
 						return true;//赌成功了
 					}
 					else if (j > 0 && gobangboard.ShowCell(j +4, i) == 2 && gobangboard.ShowCell(j - 1, i) == 0)
 					{
-						gobangboard.SetCell(j - 1, i, 2);
-						setfillcolor(WHITE);
-						solidcircle((j - 1 ) * 35, i * 35, 14);
-						setchessorder.emplace_back(j -1, i, 2);
-						rounds++;
+						operate.dropChessWhite(j - 1, i);
 						return true;//赌成功了
 					}
 					else if (j < N-4 && gobangboard.ShowCell(j - 1, i) == 2 && gobangboard.ShowCell(j +4, i) == 0)
 					{
-						gobangboard.SetCell(j +4, i,2);
-						setfillcolor(WHITE);
-						solidcircle((j + 4) * 35, i * 35, 14);
-						setchessorder.emplace_back(j + 4, i, 2);
-						rounds++;
+						operate.dropChessWhite(j +4, i);
 						return true;//赌成功了
 					}
 				}
@@ -154,56 +122,32 @@ bool chongsi()
 					{
 						if (i == 0 && gobangboard.ShowCell(i+4, j-4) == 0)
 						{
-							gobangboard.SetCell(i+4, j-4,2);
-							setfillcolor(WHITE);
-							solidcircle((i + 4) * 35, (j-4) * 35, 14);
-							setchessorder.emplace_back(i+ 4, j-4, 2);
-							rounds++;
+							operate.dropChessWhite(i+4, j-4);
 							return true;//赌成功了
 						}
 						else if (i == N-4 && gobangboard.ShowCell(i-1, j+1) == 0)
 						{
-							gobangboard.SetCell(i - 1, j + 1,2);
-							setfillcolor(WHITE);
-							solidcircle((i-1) * 35, (j+1) * 35, 14);
-							setchessorder.emplace_back(i -1, j +1, 2);
-							rounds++;
+							operate.dropChessWhite(i - 1, j+1);
 							return true;//赌成功了
 						}
 						else if (j == 3 && gobangboard.ShowCell(i - 1, j + 1) == 0)
 						{
-							gobangboard.SetCell(i - 1, j + 1,2);
-							setfillcolor(WHITE);
-							solidcircle((i-1) * 35, (j+1) * 35, 14);
-							setchessorder.emplace_back(i -1, j +1, 2);
-							rounds++;
+							operate.dropChessWhite(i - 1, j + 1);
 							return true;//赌成功了
 						}
 						else if (j == N-1 && gobangboard.ShowCell(i +4, j -4) == 0)
 						{
-							gobangboard.SetCell(i + 4, j - 4,2);
-							setfillcolor(WHITE);
-							solidcircle((i + 4) * 35, (j-4) * 35, 14);
-							setchessorder.emplace_back(i + 4, j - 4, 2);
-							rounds++;
+							operate.dropChessWhite(i +4, j -4);
 							return true;//赌成功了
 						}
 						else if (i < N-4 && gobangboard.ShowCell(i -1, j +1) == 2 && gobangboard.ShowCell(i + 4, j - 4) == 0)
 						{
-							gobangboard.SetCell(i + 4, j - 4,2);
-							setfillcolor(WHITE);
-							solidcircle((i + 4) * 35, (j-4) * 35, 14);
-							setchessorder.emplace_back(i + 4, j - 4, 2);
-							rounds++;
+							operate.dropChessWhite(i + 4, j - 4);
 							return true;//赌成功了
 						}
 						else if (i > 0 && gobangboard.ShowCell(i + 4, j - 4) == 2 && gobangboard.ShowCell(i -1, j + 1) == 0)
 						{
-							gobangboard.SetCell(i - 1, j + 1, 2);
-							setfillcolor(WHITE);
-							solidcircle((i-1) * 35, (j+1) * 35, 14);
-							setchessorder.emplace_back(i -1, j +1, 2);
-							rounds++;
+							operate.dropChessWhite(i - 1, j + 1);
 							return true;//赌成功了
 						}
 					}
@@ -224,56 +168,32 @@ bool chongsi()
 					{
 						if (i == 0 && gobangboard.ShowCell(i + 4, j + 4) == 0)
 						{
-							gobangboard.SetCell(i + 4, j + 4, 2);
-							setfillcolor(WHITE);
-							solidcircle((i +4) * 35, (j + 4) * 35, 14);
-							setchessorder.emplace_back(i + 4, j + 4, 2);
-							rounds++;
+							operate.dropChessWhite(i +4, j + 4);
 							return true;//赌成功了
 						}
 						else if (i == N-4 && gobangboard.ShowCell(i -1, j - 1) == 0)
 						{
-							gobangboard.SetCell(i - 1, j - 1, 2);
-							setfillcolor(WHITE);
-							solidcircle((i - 1) * 35, (j - 1) * 35, 14);
-							setchessorder.emplace_back(i - 1, j - 1, 2);
-							rounds++;
+							operate.dropChessWhite(i - 1, j - 1);
 							return true;//赌成功了
 						}
 						else if (j == N-4 && gobangboard.ShowCell(i - 1, j - 1) == 0)
 						{
-							gobangboard.SetCell(i - 1, j - 1, 2);
-							setfillcolor(WHITE);
-							solidcircle((i - 1) * 35, (j - 1) * 35, 14);
-							setchessorder.emplace_back(i - 1, j - 1, 2);
-							rounds++;
+							operate.dropChessWhite(i - 1, j - 1);
 							return true;//赌成功了
 						}
 						else if (j == 0 && gobangboard.ShowCell(i +4, j +4) == 0)
 						{
-							gobangboard.SetCell(i +4, j +4, 2);
-							setfillcolor(WHITE);
-							solidcircle((i +4) * 35, (j + 4) * 35, 14);
-							setchessorder.emplace_back(i + 4, j + 4, 2);
-							rounds++;
+							operate.dropChessWhite(i + 4, j + 4);
 							return true;//赌成功了
 						}
 						else if (j < N-4 && gobangboard.ShowCell(i - 1, j - 1) == 2 && gobangboard.ShowCell(i + 4, j + 4) == 0)
 						{
-							gobangboard.SetCell(i + 4, j + 4, 2);
-							setfillcolor(WHITE);
-							solidcircle((i + 4) * 35, (j + 4) * 35, 14);
-							setchessorder.emplace_back(i + 4, j + 4, 2);
-							rounds++;
+							operate.dropChessWhite(i + 4, j + 4);
 							return true;//赌成功了
 						}
 						else if (i > 0 && gobangboard.ShowCell(i + 4, j + 4) == 2 && gobangboard.ShowCell(i - 1, j - 1) == 0)
 						{
-							gobangboard.SetCell(i - 1, j - 1, 2);
-							setfillcolor(WHITE);
-							solidcircle((i - 1) * 35, (j - 1) * 35, 14);
-							setchessorder.emplace_back(i -1, j - 1, 2);
-							rounds++;
+							operate.dropChessWhite(i-1, j-1);
 							return true;//赌成功了
 						}
 					}
@@ -302,21 +222,13 @@ bool huosan()
 						if (j == 1 || j != N-4)
 						{
 							//必然堵右边
-							gobangboard.SetCell(i, j + 3, 2);
-							setfillcolor(WHITE);
-							solidcircle(i * 35, (j +3) * 35, 14);
-							setchessorder.emplace_back(i , j +3, 2);
-							rounds++;
+							operate.dropChessWhite(i , j + 3);
 							return true;//赌成功了
 						}
 						if (j == N-4)
 						{
 							//必然堵左边
-							gobangboard.SetCell(i, j - 1, 2);
-							setfillcolor(WHITE);
-							solidcircle(i* 35, (j - 1) * 35, 14);
-							setchessorder.emplace_back(i , j - 1, 2);
-							rounds++;
+							operate.dropChessWhite(i , j -1);
 							return true;//赌成功了
 						}
 					}
@@ -337,20 +249,12 @@ bool huosan()
 					{
 						if (i == 1 || i != N-4)
 						{
-							gobangboard.SetCell(i+3, j,2 );
-							setfillcolor(WHITE);
-							solidcircle((i+3) * 35, j * 35, 14);
-							setchessorder.emplace_back(i + 3, j , 2);
-							rounds++;
+							operate.dropChessWhite(i + 3, j );
 							return true;//赌成功了
 						}
 						else if (i == N-4)
 						{
-							gobangboard.SetCell(i-1, j,2);
-							setfillcolor(WHITE);
-							solidcircle((i - 1) * 35, j * 35, 14);
-							setchessorder.emplace_back(i -1, j, 2);
-							rounds++;
+							operate.dropChessWhite(i -1, j );
 							return true;//赌成功了
 						}
 					}
@@ -372,21 +276,13 @@ bool huosan()
 						if (i == 12)
 						{
 							//必然堵上边
-							gobangboard.SetCell(i-1, j + 1,2);
-							setfillcolor(WHITE);
-							solidcircle((i-1) * 35, (j + 1) * 35, 14);
-							setchessorder.emplace_back(i -1, j +1, 2);
-							rounds++;
+							operate.dropChessWhite(i -1, j + 1);
 							return true;//赌成功了
 						}
 						else
 						{
 							//赌下边
-							gobangboard.SetCell(i + 3, j - 3, 2);
-							setfillcolor(WHITE);
-							solidcircle((i+3) * 35, (j - 3) * 35, 14);
-							setchessorder.emplace_back(i + 3, j - 3, 2);
-							rounds++;
+							operate.dropChessWhite(i + 3, j -3);
 							return true;//赌成功了
 						}
 					}
@@ -408,21 +304,13 @@ bool huosan()
 						if (i == 1)
 						{
 							//赌下边
-							gobangboard.SetCell(i+3, j +3, 2);
-							setfillcolor(WHITE);
-							solidcircle((i+3) * 35, (j +3) * 35, 14);
-							setchessorder.emplace_back(i + 3, j +3, 2);
-							rounds++;
+							operate.dropChessWhite(i + 3, j + 3);
 							return true;//赌成功了
 						}
 						else
 						{
 							//堵上边
-							gobangboard.SetCell(i - 1, j - 1, 2);
-							setfillcolor(WHITE);
-							solidcircle((i-1) * 35, (j - 1) * 35, 14);
-							setchessorder.emplace_back(i -1, j - 1, 2);
-							rounds++;
+							operate.dropChessWhite(i -1, j -1);
 							return true;//赌成功了
 						}
 					}
@@ -442,11 +330,7 @@ bool huosan()
 				{
 					if (gobangboard.ShowCell(i, j - 1) == 0 && gobangboard.ShowCell(i, j +4) == 0)
 					{
-						gobangboard.SetCell(i, j + 2, 2);
-						setfillcolor(WHITE);
-						solidcircle(i * 35, (j +2) * 35, 14);
-						setchessorder.emplace_back(i , j +2, 2);
-						rounds++;
+						operate.dropChessWhite(i , j + 2);
 						return true;//赌成功了
 					}
 				}
@@ -454,11 +338,7 @@ bool huosan()
 				{
 					if (gobangboard.ShowCell(i, j - 1) == 0 && gobangboard.ShowCell(i, j +4) == 0)
 					{
-						gobangboard.SetCell(i, j + 1, 2);
-						setfillcolor(WHITE);
-						solidcircle(i * 35, (j + 1) * 35, 14);
-						setchessorder.emplace_back(i, j+1, 2);
-						rounds++;
+						operate.dropChessWhite(i , j + 1);
 						return true;//赌成功了
 					}
 				}
@@ -476,11 +356,7 @@ bool huosan()
 				{
 					if (gobangboard.ShowCell(i-1, j) == 0 && gobangboard.ShowCell(i+4, j) == 0)
 					{
-						gobangboard.SetCell(i + 2, j, 2);
-						setfillcolor(WHITE);
-						solidcircle((i+2) * 35, j* 35, 14);
-						setchessorder.emplace_back(i + 2, j, 2);
-						rounds++;
+						operate.dropChessWhite(i + 2, j );
 						return true;//赌成功了
 					}
 				}
@@ -488,11 +364,7 @@ bool huosan()
 				{
 					if (gobangboard.ShowCell(i - 1, j) == 0 && gobangboard.ShowCell(i + 4, j) == 0)
 					{
-						gobangboard.SetCell(i + 1, j, 2);
-						setfillcolor(WHITE);
-						solidcircle((i+1) * 35, j* 35, 14);
-						setchessorder.emplace_back(i + 1, j , 2);
-						rounds++;
+						operate.dropChessWhite(i + 1, j );
 						return true;//赌成功了
 					}
 				}
@@ -510,11 +382,7 @@ bool huosan()
 				{
 					if (gobangboard.ShowCell(i - 1, j+1) == 0 && gobangboard.ShowCell(i + 4, j-4) == 0)
 					{
-						gobangboard.SetCell(i + 1, j - 1, 2);
-						setfillcolor(WHITE);
-						solidcircle((i+1) * 35, (j - 1) * 35, 14);
-						setchessorder.emplace_back(i + 1, j - 1, 2);
-						rounds++;
+						operate.dropChessWhite(i + 1, j -1);
 						return true;//赌成功了
 					}
 				}
@@ -522,11 +390,7 @@ bool huosan()
 				{
 					if (gobangboard.ShowCell(i - 1, j+1) == 0 && gobangboard.ShowCell(i + 4, j-4) == 0)
 					{
-						gobangboard.SetCell(i + 2, j - 2, 2);
-						setfillcolor(WHITE);
-						solidcircle((i+2) * 35, (j - 2) * 35, 14);
-						setchessorder.emplace_back(i + 2, j - 2, 2);
-						rounds++;
+						operate.dropChessWhite(i + 2, j -2);
 						return true;//赌成功了
 					}
 				}
@@ -544,11 +408,7 @@ bool huosan()
 				{
 					if (gobangboard.ShowCell(i-1, j-1) == 0 && gobangboard.ShowCell(i+4, j+4) == 0)
 					{
-						gobangboard.SetCell(i + 1, j + 1, 2);
-						setfillcolor(WHITE);
-						solidcircle((i+1) * 35, (j + 1) * 35, 14);
-						setchessorder.emplace_back(i + 1, j +1, 2);
-						rounds++;
+						operate.dropChessWhite(i + 1, j + 1);
 						return true;//赌成功了
 					}
 				}
@@ -556,11 +416,7 @@ bool huosan()
 				{
 					if (gobangboard.ShowCell(i-1, j-1) == 0 && gobangboard.ShowCell(i+4, j+4) == 0)
 					{
-						gobangboard.SetCell(i + 2, j + 2, 2);
-						setfillcolor(WHITE);
-						solidcircle((i+2) * 35, (j +2) * 35, 14);
-						setchessorder.emplace_back(i + 2, j +2, 2);
-						rounds++;
+						operate.dropChessWhite(i + 2, j + 2);
 						return true;//赌成功了
 					}
 				}
@@ -597,11 +453,7 @@ bool AI::find()
 						{
 							if (gobangboard.ShowCell(i, k) == 0)
 							{
-								gobangboard.SetCell(i, k, 2);
-								setfillcolor(WHITE);
-								solidcircle(i * 35, k * 35, 14);
-								setchessorder.emplace_back(i, k, 2);
-								rounds++;
+								operate.dropChessWhite(i , k);
 								return true;//找成功了
 							}
 						}
@@ -616,11 +468,7 @@ bool AI::find()
 						{
 							if (gobangboard.ShowCell(i, k) == 0)
 							{
-								gobangboard.SetCell(i, k, 2);
-								setfillcolor(WHITE);
-								solidcircle(i * 35, k * 35, 14);
-								setchessorder.emplace_back(i, k, 2);
-								rounds++;
+								operate.dropChessWhite(i , k);
 								return true;//找成功了
 							}
 						}
@@ -635,11 +483,7 @@ bool AI::find()
 bool AI::random()
 {
 	point t(nearestCell());
-	gobangboard.SetCell(t.ShowX(), t.ShowY(), 2);
-	setfillcolor(WHITE);
-	solidcircle(t.ShowX() * 35, t.ShowY() * 35, 14);
-	setchessorder.emplace_back(t.ShowX(), t.ShowY(), 2);
-	rounds++;
+	operate.dropChessWhite(t.ShowX(), t.ShowY());
 	return true;
 }
 

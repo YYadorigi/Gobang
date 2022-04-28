@@ -88,6 +88,22 @@ namespace MyGobang
 	private:
 		int board[16][16];
 	};
+
+	//游戏操作类
+	class GameOperator
+	{
+	public:
+		GameOperator(bool go) :gameoperator(go) {};
+		virtual ~GameOperator(){}
+		void drawLineRed(int, int);		//在坐标(a,b)处绘制十字线
+		void drawLineBlack(int, int);
+		void dropChessBlack(int, int);	//落子于坐标(a,b)处
+		void dropChessWhite(int, int);
+		int SaveData(const char*);		//将vector保存到二进制文件
+		int LoadData(const char*);		//从二进制中读取之前保存的数据并还原vector和棋盘数据
+	private:
+		bool gameoperator;
+	};
 }
 
 extern std::vector<MyGobang::chess> setchessorder;			//用于存储落子记录的STL容器
@@ -95,7 +111,7 @@ extern std::vector<MyGobang::chess> setchessorder;			//用于存储落子记录�
 extern MyGobang::Judge judgement;					//定义裁判类实例对象
 extern MyGobang::chessboard gobangboard;			//定义棋盘类实例对象
 extern MyGobang::AI Ai;						//定义AI类实例对象
-
+extern MyGobang::GameOperator operate;		//定义游戏操作类实例对象
 
 
 

@@ -9,16 +9,17 @@ extern std::vector<MyGobang::chess> setchessorder = {};			//用于存储落子�
 extern MyGobang::Judge judgement(true);					//定义裁判类实例对象
 extern MyGobang::chessboard gobangboard(0);			//定义棋盘类实例对象
 extern MyGobang::AI Ai(true);						//定义AI类实例对象
+extern MyGobang::GameOperator operate(true);		//定义游戏操作类实例对象
 
-static const int vertif = 0x1234abcd;		//vertif放在文件的开头和结尾用于简单判断是否正确读取数据 
-static std::string filePath = "D:/Program Files (x86)/IDE Projects/Cpp Projects/Microsoft Visual Studio/Gobang/SaveAndLoad.txt";		//文件路径
+static const char* filePath1 = "SaveAndLoad1.txt";		//文件路径1，存取本地双人对战残局
+static const char* filePath2 = "SaveAndLoad2.txt";		//文件路径2，存取AI对弈残局
 
 static MOUSEMSG mouse;		//定义鼠标类实例对象
-static int x = 0, y = 0;			//鼠标坐标
-static int a = 0, b = 0;			//棋盘列行
+extern int x = 0, y = 0;			//鼠标坐标
+extern int a = 0, b = 0;			//棋盘列行
 
 //绘制透明背景png图片，并自动去除背景
-void drawAlpha(IMAGE* picture, int  picture_x, int picture_y) //x为载入图片的X坐标，y为Y坐标
+extern void drawAlpha(IMAGE* picture, int  picture_x, int picture_y) //x为载入图片的X坐标，y为Y坐标
 {
 
 	// 变量初始化
@@ -56,7 +57,7 @@ void drawAlpha(IMAGE* picture, int  picture_x, int picture_y) //x为载入图片
 }
 
 //加载初始界面
-void initUI()
+extern void initUI()
 {
 	IMAGE img1, img2, img3, img4;
 	initgraph(350, 500);
@@ -78,7 +79,7 @@ void initUI()
 }
 
 //画出棋盘
-void initGame()		 	//初始化游戏
+extern void initGame()		 	//初始化游戏
 {
 	IMAGE img1, img2, img3, img4,img5;
 	initgraph(660, 560);
@@ -111,42 +112,6 @@ void initGame()		 	//初始化游戏
 	settextstyle(20, 0, _T("宋体"));
 	outtextxy(575, 300, "存档");
 	outtextxy(575, 430, "读档");
-}
-
-//将vector保存到二进制文件
-int SaveData()
-{
-	using namespace std;
-
-	ofstream ofile(filePath.c_str(),ios::binary);		//自动覆盖文本
-
-	//将vector保存到文件,格式：4字节检验码+4字节数组长度+4字节数据长度+可变长度的数据+4字节尾部检验码
-	if (!ofile.is_open())
-	{
-		MessageBox(NULL, "存档失败！", "存档", MB_OK);
-		return -1;
-	}
-
-	ofile.write((char*)&vertif, sizeof(int));
-
-	int length = (int)setchessorder.size();
-	ofile.write((char*)&length, sizeof(int));
-
-	int totalSize = (int)setchessorder.size() * sizeof(chess);
-	ofile.write((char*)&totalSize, sizeof(int));
-
-	ofile.write((char*)&setchessorder[0], totalSize);	//注意取址方式，不能用begin() 
-	ofile.write((char*)&vertif, sizeof(int));
-
-	ofile.close();
-
-	return 0;
-}
-
-//从二进制中读取之前保存的数据并还原vector和棋盘数据
-int LoadData()
-{
-	using namespace std;
 
 	//初始化游戏数据
 	setchessorder.clear();
@@ -157,71 +122,6 @@ int LoadData()
 		{
 			gobangboard.SetCell(i, j, 0);
 		}
-	}
-
-	ifstream ifile(filePath.c_str(), ios::binary);
-
-	int tmpVertif, length, totalSize;
-
-	ifile.read((char*)&tmpVertif, sizeof(int));
-	if (tmpVertif != vertif)
-	{
-		MessageBox(NULL, "读取存档失败！", "读档", MB_OK);
-		return -1;
-	}
-
-	ifile.read((char*)&length, sizeof(int));
-	ifile.read((char*)&totalSize, sizeof(int));
-
-	vector<chess>setchessorder(length);	//需要往文件里面放长度的原因
-
-	ifile.read((char*)&setchessorder[0], totalSize);
-	ifile.read((char*)&tmpVertif, sizeof(int));
-
-	if (tmpVertif != vertif) 
-	{
-		MessageBox(NULL, "读取存档时发生错误！", "读档", MB_OK);
-		return -1;
-	}
-
-	rounds = (int)setchessorder.size();		//载入回合数
-
-	for (size_t i = 0; i < setchessorder.size(); ++i)			//存档载入gobangboard二维数组，并打印图形
-	{
-		gobangboard.SetCell(setchessorder[i].ShowX(), setchessorder[i].ShowY(), setchessorder[i].ShowColor());
-		if (setchessorder[i].ShowColor() == 1)
-		{
-			setfillcolor(BLACK);
-			solidcircle(setchessorder[i].ShowX() * 35, setchessorder[i].ShowY() * 35, 14);
-		}
-		else if (setchessorder[i].ShowColor() == 2)
-		{
-			setfillcolor(WHITE);
-			solidcircle(setchessorder[i].ShowX() * 35, setchessorder[i].ShowY() * 35, 14);
-		}
-	}
-
-	ifile.close();
-
-	return 0;
-
-}
-
-//确认存档，基于SaveData()实现
-void ifSave()
-{
-	auto t = MessageBox(NULL, "确认存档？", "存档", MB_YESNO);	//弹出一个提示框
-	if (t == IDYES) { SaveData(); }
-}
-
-//读取存档，基于LoadData()实现
-void ifLoad()
-{
-	auto t = MessageBox(NULL, "确认读取最近一次的存档？", "读档", MB_YESNO);
-	if (t == IDYES)
-	{
-		initGame();
-		LoadData();
 	}
 }
 
@@ -255,11 +155,11 @@ void playChess1()
 			{
 				if ((555 <= x && x <= 635) && (310 <= y && y <= 390))
 				{
-					ifSave();
+					operate.SaveData(filePath1);
 				}
 				else if ((555 <= x && x <= 635) && (450 <= y && y <= 530))
 				{
-					ifLoad();
+					operate.LoadData(filePath1);
 				}
 				else if ((590 <= x && x <= 640) && (10 <= y && y <= 60))
 				{
@@ -277,11 +177,13 @@ void playChess1()
 						MessageBox(NULL, "悔棋成功！", "悔棋", MB_OK);
 						IMAGE img_t;
 						chess t = setchessorder[(int)setchessorder.size() - 1];
+
 						clearcircle(t.ShowX() * 35, t.ShowY() * 35,14);
 						loadimage(&img_t, "./src/bg_wood.jpg", 36, 36);
 						drawAlpha(&img_t,t.ShowX() * 35 - 18, t.ShowY() * 35 - 18);
-						line(t.ShowX() * 35 - 18, t.ShowY() * 35-18, t.ShowX() * 35 - 18, t.ShowY() * 35+18 );
-						line(t.ShowX() * 35 - 18, t.ShowY() * 35 - 18, t.ShowX() * 35 + 18, t.ShowY() * 35 - 18);
+
+						operate.drawLineBlack(t.ShowX(), t.ShowY());
+
 						gobangboard.SetCell(t.ShowX(), t.ShowY() , 0);
 						setchessorder.pop_back();
 						rounds--;
@@ -306,19 +208,12 @@ void playChess1()
 			//判断黑白子
 			if (rounds % 2 == 0)			//	偶数次 黑子
 			{
-				setfillcolor(BLACK);
-				solidcircle(x, y, 14);
-				gobangboard.SetCell(a, b, 1);
-				setchessorder.emplace_back(a, b,1);
+				operate.dropChessBlack(a, b);
 			}
 			else 						//	奇数次 白子
 			{	
-				setfillcolor(WHITE);
-				solidcircle(x, y, 14);
-				gobangboard.SetCell(a, b, 2);
-				setchessorder.emplace_back(a, b, 2);
+				operate.dropChessWhite(a, b);
 			}
-			rounds++;
 		}
 		if (judgement.JudgeWin(a, b)) 
 		{
@@ -368,11 +263,11 @@ void playChess2()
 				{
 					if ((555 <= x && x <= 635) && (310 <= y && y <= 390))
 					{
-						ifSave();
+						operate.SaveData(filePath2);
 					}
 					else if ((555 <= x && x <= 635) && (450 <= y && y <= 530))
 					{
-						ifLoad();
+						operate.LoadData(filePath2);
 					}
 					else if ((590 <= x && x <= 640) && (10 <= y && y <= 60))
 					{
@@ -390,11 +285,13 @@ void playChess2()
 						{
 							IMAGE img_t;
 							chess t = setchessorder[(int)setchessorder.size() - 1];
+
 							clearcircle(t.ShowX() * 35, t.ShowY() * 35, 14);
 							loadimage(&img_t, "./src/bg_wood.jpg", 36, 36);
 							drawAlpha(&img_t, t.ShowX() * 35 - 18, t.ShowY() * 35 - 18);
-							line(t.ShowX() * 35 - 18, t.ShowY() * 35 - 18, t.ShowX() * 35 - 18, t.ShowY() * 35 + 18);
-							line(t.ShowX() * 35 - 18, t.ShowY() * 35 - 18, t.ShowX() * 35 + 18, t.ShowY() * 35 - 18);
+
+							operate.drawLineBlack(t.ShowX(), t.ShowY());
+
 							gobangboard.SetCell(t.ShowX(), t.ShowY(), 0);
 							setchessorder.pop_back();
 							rounds--;
@@ -412,11 +309,7 @@ void playChess2()
 					MessageBox(NULL, "这里已有棋子，请重新选择！", "提示", MB_OK);	//弹出一个提示框
 					continue;	//进入下一循环
 				}
-				setfillcolor(BLACK);
-				solidcircle(x, y, 14);
-				gobangboard.SetCell(a, b, 1);
-				setchessorder.emplace_back(a, b, 1);
-				rounds++;
+				operate.dropChessBlack(a, b);
 			}
 			if (judgement.JudgeWin(a, b))
 			{
@@ -428,7 +321,6 @@ void playChess2()
 		{
 			//思路：遍历棋盘查找对方是否存在成功的可能，如果有堵住对方；如果没有，找自己可以成功的位置
 			Sleep(300);		//短暂落子延迟
-
 			if (Ai.bet() == false)
 			{
 				//找自己可以成的位置；如果没有，则随机落子
@@ -510,10 +402,8 @@ int main()
 }
 
 
-//存档功能可以进一步实现多个存档，这样一来，人机对战的存档也能和双人对战的存档彻底区分开了。
+//存档功能可以进一步实现多个存档。
 //按钮判断没必要点阵化，降低精准度；可以把判定区域做成圆角矩形，更加精确。
-//自定义棋盘大小的实现。要想实现此功能，最好将棋盘类的成员变量由二维数组改为其指针。
 // 玩家和AI对决时的选边实现。
 // Socket网络编程的实现。
 //边缘落子待优化。
-//悔棋后留下的黑色边框阴影有待优化掉。
