@@ -420,16 +420,8 @@ void playChess2()
 			}
 			if (judgement.JudgeWin(a, b))
 			{
-				if (rounds % 2 == 0)
-				{
-					MessageBox(NULL, "电脑胜利。", "游戏结束", MB_OK);	//弹出一个提示框
-					exit(0);
-				}
-				else
-				{
-					MessageBox(NULL, "玩家胜利。", "游戏结束", MB_OK);	//弹出一个提示框
-					exit(0);
-				}
+				MessageBox(NULL, "玩家胜利。", "游戏结束", MB_OK);	//弹出一个提示框
+				exit(0);
 			}
 		}
 		else			//	电脑走
@@ -447,16 +439,9 @@ void playChess2()
 			}
 			if (judgement.JudgeWin(setchessorder[(int)setchessorder.size() - 1].ShowX(), setchessorder[(int)setchessorder.size() - 1].ShowY()))
 			{
-				if (rounds % 2 == 0)
-				{
-					MessageBox(NULL, "电脑胜利。", "游戏结束", MB_OK);	//弹出一个提示框
-					exit(0);
-				}
-				else
-				{
-					MessageBox(NULL, "玩家胜利。", "游戏结束", MB_OK);	//弹出一个提示框
-					exit(0);
-				}
+				MessageBox(NULL, "电脑胜利。", "游戏结束", MB_OK);	//弹出一个提示框
+				exit(0);
+				
 			}
 		}
 	}
