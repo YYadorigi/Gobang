@@ -190,6 +190,6 @@ void AI::ActionByAI(int& clickRow, int& clickCol) {
     std::pair<int, int> pointPair = maxPoints.at(index);
     clickRow = pointPair.first;
     clickCol = pointPair.second;
-    Sleep(200);
+    Sleep(300);
     menu.DropChessWhite(clickRow, clickCol);
 }

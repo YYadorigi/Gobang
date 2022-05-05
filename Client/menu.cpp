@@ -225,6 +225,49 @@ BOOL Menu::JudgeWin()
 				return TRUE;
 			}
 		}
+	for (int i = 2; i <= 12; i++)
+	{
+		if (Map[0][i] != 0 && Map[0][i] == Map[0][i - 1] && Map[0][i] == Map[0][i - 2] && Map[0][i] == Map[0][i + 1] && Map[0][i] == Map[0][i + 2])
+		{
+			GameOver = TRUE;
+			return TRUE;
+		}
+		if (Map[1][i] != 0 && Map[1][i] == Map[1][i - 1] && Map[1][i] == Map[1][i - 2] && Map[1][i] == Map[1][i + 1] && Map[1][i] == Map[1][i + 2])
+		{
+			GameOver = TRUE;
+			return TRUE;
+		}
+		if (Map[13][i] != 0 && Map[13][i] == Map[13][i - 1] && Map[13][i] == Map[13][i - 2] && Map[13][i] == Map[13][i + 1] && Map[13][i] == Map[13][i + 2])
+		{
+			GameOver = TRUE;
+			return TRUE;
+		}
+		if (Map[14][i] != 0 && Map[14][i] == Map[14][i - 1] && Map[14][i] == Map[14][i - 2] && Map[14][i] == Map[14][i + 1] && Map[14][i] == Map[14][i + 2])
+		{
+			GameOver = TRUE;
+			return TRUE;
+		}
+		if (Map[i][0] != 0 && Map[i][0] == Map[i - 1][0] && Map[i][0] == Map[i - 2][0] && Map[i][0] == Map[i + 1][0] && Map[i][0] == Map[i + 2][0])
+		{
+			GameOver = TRUE;
+			return TRUE;
+		}
+		if (Map[i][1] != 0 && Map[i][1] == Map[i - 1][1] && Map[i][1] == Map[i - 2][1] && Map[i][1] == Map[i + 1][1] && Map[i][1] == Map[i + 2][1])
+		{
+			GameOver = TRUE;
+			return TRUE;
+		}
+		if (Map[i][13] != 0 && Map[i][13] == Map[i - 1][13] && Map[i][13] == Map[i - 2][13] && Map[i][13] == Map[i + 1][13] && Map[i][13] == Map[i + 2][13])
+		{
+			GameOver = TRUE;
+			return TRUE;
+		}
+		if (Map[i][14] != 0 && Map[i][14] == Map[i - 1][14] && Map[i][14] == Map[i - 2][14] && Map[i][14] == Map[i + 1][14] && Map[i][14] == Map[i + 2][14])
+		{
+			GameOver = TRUE;
+			return TRUE;
+		}
+	}
 	return FALSE;
 }
 
@@ -263,12 +306,12 @@ void Menu::RePlayOnline()
 		if (N->P == 1)
 		{
 			setfillcolor(WHITE);
-			fillcircle(40 + 40 * N->y, 40 + 40 * N->x, PieceRadius);
+			solidcircle(40 + 40 * N->y, 40 + 40 * N->x, PieceRadius);
 		}
 		else
 		{
 			setfillcolor(BLACK);
-			fillcircle(40 + 40 * N->y, 40 + 40 * N->x, PieceRadius);
+			solidcircle(40 + 40 * N->y, 40 + 40 * N->x, PieceRadius);
 		}
 		N = N->NEXT;
 		FlushBatchDraw();

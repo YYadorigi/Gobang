@@ -46,8 +46,10 @@ void InitGame()
 
 void WithAI()
 {
-	initgraph(WWidth, WHeight);
-
+	HWND hwnd = initgraph(WWidth, WHeight, 0);
+	SetWindowTextA(hwnd, "五子棋");
+	mciSendString("open ./src/WalkInDust.mp3 alias bgm", NULL, 0, NULL);		//循环播放背景音乐
+	mciSendString("play bgm repeat", NULL, 0, NULL);
 	InitGame();
 
 	//初始化游戏数据
@@ -237,8 +239,10 @@ void WithAI()
 
 void Offline()
 {
-	initgraph(WWidth, WHeight);
-
+	HWND hwnd = initgraph(WWidth, WHeight, 0);
+	SetWindowTextA(hwnd, "五子棋");
+	mciSendString("open ./src/WalkInDust.mp3 alias bgm", NULL, 0, NULL);		//循环播放背景音乐
+	mciSendString("play bgm repeat", NULL, 0, NULL);
 	InitGame();
 
 	//初始化游戏数据
@@ -613,5 +617,5 @@ int Online()
 	closesocket(serverSocket);
 	//7 清理协议版本信息
 	WSACleanup();
-	return 0;
+	exit(0);
 }
